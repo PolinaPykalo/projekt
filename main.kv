@@ -1,0 +1,97 @@
+ScreenManager:
+    MenuScreen:
+    CreateScreen:
+    FlashcardsScreen:
+    StudyScreen:
+
+<MenuScreen>:
+    name: 'menu'
+    MDGridLayout:
+        id: group_list_layout
+        cols: 1
+        size_hint_y: None
+        height: self.minimum_height
+        pos_hint: {"top": 0.9}
+    MDTopAppBar:
+        title: "Answa"
+        pos_hint: {"top": 1}
+        elevation: 0
+        md_bg_color: (0 / 255, 0 / 255, 128 / 255)
+    MDFloatingActionButton:
+        icon: "note-plus"
+        md_bg_color: (0 / 255, 0 / 255, 128 / 255)
+        pos: root.width - self.width - dp(16), dp(16)
+        elevation: 0
+        on_press: root.manager.current = 'create'
+
+<CreateScreen>:
+    name: 'create'
+    MDTopAppBar:
+        title: "Answa"
+        pos_hint: {"top": 1}
+        elevation: 0
+        left_action_items: [["chevron-left", lambda x: root.on_left_action_items(x)]]
+        right_action_items: [["content-save-check-outline", lambda x: root.save_to_json()]]
+        md_bg_color: (0 / 255, 0 / 255, 128 / 255)
+    MDTextField:
+        id: group_name
+        hint_text: "Enter name group..."
+        mode: "fill"
+        pos_hint: {"top": 0.9}
+    ScrollView:
+        size_hint: (1, 1)
+        pos_hint: {"top": 0.8}
+        GridLayout:
+            id: card_container
+            cols: 1
+            size_hint_y: None
+            height: self.minimum_height
+    MDIconButton:
+        icon: "plus-circle-outline"
+        theme_icon_color: "Custom"
+        icon_color: (0 / 255, 0 / 255, 128 / 255)
+        icon_size: "54sp"
+        pos: root.width - self.width - dp(16), dp(16)
+        on_release: root.add_card()
+
+<FlashcardsScreen>:
+    name: 'flashcards'
+    MDTopAppBar:
+        title: "Answa"
+        pos_hint: {"top": 1}
+        elevation: 0
+        left_action_items: [["chevron-left", lambda x: root.on_left_action_items(x)]]  
+        right_action_items: [["school", lambda x: root.on_right_action_items(x)]]
+        md_bg_color: (0 / 255, 0 / 255, 128 / 255)
+    MDIconButton:
+        icon: "trash-can"
+        theme_icon_color: "Custom"
+        icon_color: (0 / 255, 0 / 255, 128 / 255)
+        icon_size: "45sp"
+        pos: root.width - self.width - dp(16), dp(16)
+        on_release: root.delete_group()
+
+<StudyScreen>:
+    name: 'study'
+    MDTopAppBar:
+        title: "Answa"
+        pos_hint: {"top": 1}
+        elevation: 0
+        left_action_items: [["chevron-left", lambda x: root.on_left_action_items(x)]]  
+        md_bg_color: (0 / 255, 0 / 255, 128 / 255)
+    MDLabel:
+        id: question_label
+        text: ''
+        halign: 'center'
+    MDTextField:
+        id: answer_input
+        hint_text: "Enter your answer..."
+        mode: "rectangle"
+        pos_hint: {"top": 0.8, "center_x": 0.5}
+        size_hint_x: 0.8
+    MDIconButton:
+        icon: "check"
+        theme_text_color: "Custom"
+        text_color: (0 / 255, 0 / 255, 128 / 255)
+        pos_hint: {"right": 1, "y": 0.7}
+        on_release: root.check_answer()
